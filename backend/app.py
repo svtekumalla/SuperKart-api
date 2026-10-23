@@ -67,10 +67,11 @@ def predict_batch():
 
         file = request.files["file"]
 
-        if not file.filename.lower().endswith(".csv"):
-            return jsonify({"error": "Please upload a CSV file."}), 400
-
-        input_df = pd.read_csv(file)
+        # Accept any upload that can be read as CSV (the filename may be missing or generic)
+        try:
+            input_df = pd.read_csv(file)
+        except Exception:
+            return jsonify({"error": "Could not read the uploaded file as a CSV."}), 400
 
         missing = [col for col in FEATURES if col not in input_df.columns]
         if missing:
