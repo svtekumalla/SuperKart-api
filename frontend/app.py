@@ -3,7 +3,7 @@ import pandas as pd
 import streamlit as st
 
 # Base URL of the Flask backend
-FRONTEND_URL = "http://localhost:7860"
+BACKEND_URL = "http://localhost:7860"
 
 # --------------------------------------------------
 # Page configuration
@@ -181,7 +181,7 @@ if predict_clicked:
         try:
             with st.spinner("Predicting sales..."):
                 response = requests.post(
-                    f"{FRONTEND_URL}/v1/predict",
+                    f"{BACKEND_URL}/v1/predict",
                     json=input_data,
                     timeout=30,
                 )
@@ -274,7 +274,7 @@ if uploaded_file is not None:
                 try:
                     with st.spinner("Generating batch predictions..."):
                         response = requests.post(
-                            f"{FRONTEND_URL}/v1/predictbatch",
+                            f"{BACKEND_URL}/v1/predictbatch",
                             files={
                                 "file": (
                                     uploaded_file.name,
